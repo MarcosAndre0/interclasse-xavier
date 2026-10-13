@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Interclasse{% endblock %} - Interclasse Arena</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  {#
+    Layout padrão das páginas com menu lateral.
+    Cada página só preenche os blocos: titulo, eyebrow, titulo_pagina, descricao, conteudo e scripts.
+    A variável "pagina" (definida em cada página) marca qual item do menu fica aceso.
+  #}
+  <div class="arena-app">
+    <aside class="sidebar" id="menu-lateral">
+      <a class="brand-lockup" href="{{ url_for('pagina_placar') }}">
+        <img class="logo-interclasse" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Interclasse">
+        <div>
+          <div class="brand-name">Interclasse</div>
+          <div class="brand-subtitle">Arena</div>
+        </div>
+      </a>
+
+      <div class="season-card">
+        <div class="season-kicker"><span class="live-dot"></span> Edição em andamento</div>
+        <strong>Interclasse<br>escolar</strong>
+        <span class="season-date" id="data-curta">—</span>
+      </div>
+
+      <nav class="side-nav" aria-label="Navegação principal">
+        <span class="nav-label">Navegar</span>
+        {% set itens = [
+          ('placar', 'pagina_placar', '📡', 'Placar ao vivo'),
+          ('classificacao', 'pagina_classificacao', '📊', 'Classificação'),
+          ('chaveamento', 'pagina_chaveamento', '🏆', 'Chaveamento'),
+          ('noticias', 'pagina_noticias', '📰', 'Notícias Escolares'),
+          ('telao', 'pagina_telao', '📺', 'Modo telão'),
+          ('marcador', 'pagina_marcador', '🖊️', 'Operação'),
+        ] %}
+        {% for chave, rota, icone, nome in itens %}
+        <a class="nav-item {{ 'is-active' if pagina == chave }}" href="{{ url_for(rota) }}">
+          <span class="nav-icone">{{ icone }}</span>
+          <span>{{ nome }}</span>
+          {% if pagina == chave %}<i class="nav-active-line"></i>{% endif %}
+        </a>
+        {% endfor %}
+        {% if pagina in ['marcador', 'admin'] %}
+        <a class="nav-item {{ 'is-active' if pagina == 'admin' }}" href="{{ url_for('pagina_admin') }}" id="link-admin" {% if pagina != 'admin' %}style="display:none;"{% endif %}>
+          <span class="nav-icone">👤</span>
+          <span>Usuários</span>
+          {% if pagina == 'admin' %}<i class="nav-active-line"></i>{% endif %}
+        </a>
+        {% endif %}
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button type="button" class="theme-switch" id="alternar-tema">
+          <span>🌙</span>
+          <span id="texto-tema">Modo escuro</span>
+          <span class="toggle" id="chave-tema"><i></i></span>
+        </button>
+      </div>
+    </aside>
+
+    <button type="button" class="mobile-scrim" id="fundo-menu" aria-label="Fechar menu" style="display:none;"></button>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <button type="button" class="mobile-menu" id="abrir-menu" aria-label="Abrir menu">☰</button>
+        <div class="breadcrumbs"><span>Interclasse Arena</span><span>›</span><strong>{% block eyebrow_topo %}{% block eyebrow %}{% endblock %}{% endblock %}</strong></div>
+        <div class="topbar-actions">
+          <span class="sync-status"><span class="live-dot"></span> {% block sincronia %}Atualização automática{% endblock %}</span>
+          {% if pagina in ['marcador', 'admin'] %}
+          <a href="#" id="link-sair" class="top-login">↩ Sair</a>
+          {% else %}
+          <a href="{{ url_for('pagina_login') }}" id="link-login" class="top-login">👤 Entrar</a>
+          {% endif %}
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-bar"></span> {{ self.eyebrow() }}</span>
+            <h1>{% block titulo_pagina %}{% endblock %}</h1>
+            <p>{% block descricao %}{% endblock %}</p>
+          </div>
+          <div class="heading-meta"><span id="data-longa">—</span></div>
+        </div>
+
+        {% block conteudo %}{% endblock %}
+      </div>
+
+      <footer class="site-footer">
+        <span><span class="brand-dot"></span> Interclasse Arena</span>
+        <span>Placar oficial do interclasse</span>
+        <span>Feito para quem joga junto.</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/tema.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/vitoria.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

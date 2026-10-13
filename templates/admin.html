@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% set pagina = "admin" %}
+{% block titulo %}Usuários{% endblock %}
+{% block eyebrow %}Central da organização{% endblock %}
+{% block titulo_pagina %}Quem pode marcar pontos?{% endblock %}
+{% block descricao %}Promova um aluno cadastrado a marcador ou rebaixe um marcador de volta a aluno. O cadastro de diretor continua sendo feito só no banco.{% endblock %}
+
+{% block conteudo %}
+
+    <div id="tabela-usuarios-container">
+      <p class="rodape-info">Carregando...</p>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

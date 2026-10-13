@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% set pagina = "marcador" %}
+{% block titulo %}Marcador de Pontos{% endblock %}
+{% block eyebrow %}Painel do marcador{% endblock %}
+{% block titulo_pagina %}Atualizações rápidas, jogo fluindo.{% endblock %}
+{% block descricao %}Abra partidas, marque pontos e sorteie as próximas rodadas.{% endblock %}
+
+{% block conteudo %}
+    <button class="btn-primaria" id="btn-abrir-nova-partida" style="margin-bottom:20px;">+ Nova Partida</button>
+
+    <div class="card" id="form-nova-partida" style="display:none;">
+      <h3 style="margin-top:0;">Criar Nova Partida</h3>
+
+      <label for="input-importar-confronto">Importar de Próximos Confrontos (opcional)</label>
+      <select id="input-importar-confronto">
+        <option value="">— Preencher manualmente —</option>
+      </select>
+
+      <div id="opcao-remover-importado" style="display:none; margin-top:8px;">
+        <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem;">
+          <input type="checkbox" id="input-remover-confronto-importado" checked style="width:auto;">
+          Remover este confronto da lista de próximos ao criar a partida
+        </label>
+      </div>
+
+      <label for="input-modalidade">Modalidade</label>
+      <select id="input-modalidade"></select>
+      <p id="preview-local" class="rodape-info" style="text-align:left; margin-top:6px;"></p>
+
+      <label for="input-time-a" id="label-time-a">Sala / Turma do Time A</label>
+      <input type="text" id="input-time-a" placeholder="Ex: 1º A">
+
+      <label for="input-time-b" id="label-time-b">Sala / Turma do Time B</label>
+      <input type="text" id="input-time-b" placeholder="Ex: 2º FDI">
+
+      <div id="area-sorteio-partida">
+        <button type="button" class="btn-sortear" id="btn-sortear-partida" title="Sorteia duas turmas que ainda não se enfrentaram nesta modalidade">🎲 Sortear turmas</button>
+        <p class="sorteio-msg" id="msg-sorteio-partida"></p>
+      </div>
+
+      <div id="campos-basquete" style="display:none;">
+        <label for="input-integrantes-a">Integrantes do Time A (separados por vírgula)</label>
+        <input type="text" id="input-integrantes-a" placeholder="Ex: Murilo, Carlos, Natan">
+
+        <label for="input-integrantes-b">Integrantes do Time B (separados por vírgula)</label>
+        <input type="text" id="input-integrantes-b" placeholder="Ex: Ana, Bia, Clara">
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:16px;">
+        <button class="btn-primaria" id="btn-salvar-partida" style="margin-top:0;">Criar Partida</button>
+        <button id="btn-cancelar-partida" style="background:#eee;">Cancelar</button>
+      </div>
+      <div class="erro" id="erro-nova-partida"></div>
+    </div>
+
+    <div id="lista-jogos-marcador"></div>
+
+    <hr style="margin:40px 0; border:none; border-top:1px solid var(--cinza-borda);">
+
+    <button class="btn-primaria" id="btn-abrir-turmas" style="margin-bottom:20px; background:#555;">🏫 Turmas participantes</button>
+
+    <div id="painel-turmas" style="display:none;">
+      <div class="card" style="margin-bottom:20px;">
+        <h3 style="margin-top:0;">Turmas participantes</h3>
+        <p class="rodape-info" style="text-align:left; margin-top:0;">
+          Essas turmas entram nos sorteios (botão 🎲). Clique no × para remover uma turma da lista.
+        </p>
+        <div id="lista-turmas" class="chips-turmas"></div>
+
+        <label for="input-novas-turmas">Adicionar turmas (separe por vírgula)</label>
+        <input type="text" id="input-novas-turmas" placeholder="Ex: 1º A, 1º B, 2º FDI, 3º DS">
+        <button class="btn-primaria" id="btn-adicionar-turmas" style="margin-top:12px;">Adicionar turmas</button>
+        <p class="sorteio-msg" id="msg-turmas"></p>
+      </div>
+    </div>
+
+    <button class="btn-primaria" id="btn-abrir-proximos" style="margin-bottom:20px; background:#555;">📅 Gerenciar Próximos Confrontos</button>
+
+    <div id="painel-proximos" style="display:none;">
+      <div id="lista-proximos-editavel"></div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3 style="margin-top:0;">Adicionar Confronto</h3>
+        <label for="novo-confronto-modalidade">Modalidade</label>
+        <select id="novo-confronto-modalidade"></select>
+
+        <label for="novo-confronto-sala-a">Sala / Turma A</label>
+        <input type="text" id="novo-confronto-sala-a" placeholder="Ex: 1º A">
+
+        <label for="novo-confronto-sala-b">Sala / Turma B</label>
+        <input type="text" id="novo-confronto-sala-b" placeholder="Ex: 2º FDI">
+
+        <button type="button" class="btn-sortear" id="btn-sortear-confronto" title="Sorteia duas turmas que ainda não se enfrentaram nesta modalidade">🎲 Sortear turmas</button>
+        <p class="sorteio-msg" id="msg-sorteio-confronto"></p>
+
+        <label for="novo-confronto-horario">Horário (opcional)</label>
+        <input type="time" id="novo-confronto-horario">
+
+        <button class="btn-primaria" id="btn-adicionar-confronto" style="margin-top:16px;">Adicionar</button>
+        <div class="erro" id="erro-novo-confronto"></div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3 style="margin-top:0;">🎲 Sortear rodada completa</h3>
+        <p class="rodape-info" style="text-align:left; margin-top:0;">
+          Sorteia todos os confrontos de uma vez. Você confere o resultado antes de adicionar à lista.
+        </p>
+
+        <label for="sorteio-modalidade">Modalidade</label>
+        <select id="sorteio-modalidade"></select>
+
+        <label>Turmas que entram no sorteio</label>
+        <div id="sorteio-turmas" class="chips-turmas"></div>
+        <div class="atalhos-sorteio">
+          <button type="button" class="btn-link" id="sorteio-marcar-todas">Marcar todas</button>
+          <button type="button" class="btn-link" id="sorteio-limpar">Limpar</button>
+        </div>
+
+        <div class="linha-horarios">
+          <div>
+            <label for="sorteio-inicio">Primeiro jogo às (opcional)</label>
+            <input type="time" id="sorteio-inicio">
+          </div>
+          <div>
+            <label for="sorteio-intervalo">Intervalo (min)</label>
+            <input type="number" id="sorteio-intervalo" min="5" max="240" step="5" value="30">
+          </div>
+        </div>
+
+        <button class="btn-primaria" id="btn-sortear-rodada">🎲 Sortear rodada</button>
+        <p class="sorteio-msg" id="msg-sorteio-rodada"></p>
+
+        <div id="sorteio-resultado" style="display:none;">
+          <h4 style="margin:16px 0 8px;">Resultado do sorteio</h4>
+          <ol id="sorteio-lista" class="lista-sorteio"></ol>
+          <div id="sorteio-aviso" class="aviso-sorteio"></div>
+          <div class="botoes-sorteio">
+            <button class="btn-primaria" id="btn-confirmar-sorteio" style="margin-top:0;">✅ Adicionar aos próximos confrontos</button>
+            <button type="button" class="btn-sortear" id="btn-sortear-de-novo" style="margin-top:0;">🔁 Sortear de novo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/marcador.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/sorteio.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% set pagina = "noticias" %}
+{% block titulo %}Notícias Escolares{% endblock %}
+{% block eyebrow %}Notícias Escolares{% endblock %}
+{% block titulo_pagina %}Tudo o que acontece na escola.{% endblock %}
+{% block descricao %}Fique por dentro do que rola nos jogos e dos avisos da escola.{% endblock %}
+{% block sincronia %}Atualiza a cada 10s{% endblock %}
+
+{% block conteudo %}
+<div class="sport-filter-row">
+  <div class="coluna-modalidades">
+    <button type="button" class="btn-modalidade selecionada" data-aba="interclasse">🏆 Interclasse</button>
+    <button type="button" class="btn-modalidade" data-aba="escola">🏫 Escola</button>
+  </div>
+  <span class="filter-caption" id="legenda-aba">o que está acontecendo nos jogos agora</span>
+</div>
+
+<div class="card painel-publicar" id="painel-publicar" style="display:none;">
+  <h3 id="titulo-publicar">Publicar notícia</h3>
+  <label for="noticia-titulo">Título</label>
+  <input type="text" id="noticia-titulo" maxlength="160" placeholder="Ex.: Amanhã, os jogos escolares serão: Vôlei e Xadrez">
+  <label for="noticia-texto">Detalhes (opcional)</label>
+  <input type="text" id="noticia-texto" maxlength="600" placeholder="Mais informações sobre a notícia">
+  <button class="btn-primaria" id="btn-publicar">Publicar</button>
+  <button type="button" class="btn-cancelar-edicao" id="btn-cancelar-edicao" style="display:none;">Cancelar edição</button>
+  <div class="erro" id="erro-noticia"></div>
+</div>
+
+<div id="lista-noticias"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/noticias.js') }}"></script>
+{% endblock %}

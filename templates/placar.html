@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% set pagina = "placar" %}
+{% block titulo %}Placar ao Vivo{% endblock %}
+{% block eyebrow %}Painel do torneio{% endblock %}
+{% block titulo_pagina %}O jogo acontece agora.{% endblock %}
+{% block descricao %}Acompanhe cada ponto, cada turma e o que vem a seguir em um só lugar.{% endblock %}
+{% block sincronia %}Atualiza a cada 3s{% endblock %}
+
+{% block conteudo %}
+<div class="sport-filter-row">
+  <div class="coluna-modalidades" id="lista-modalidades"></div>
+  <span class="filter-caption"><span class="live-dot"></span> dados atualizados em tempo real</span>
+</div>
+
+<section class="stats-strip">
+  <article class="stat-card stat-lime">
+    <div class="stat-icon">📡</div><span>Ao vivo agora</span>
+    <strong id="num-ao-vivo">00</strong><small>jogos em andamento</small>
+  </article>
+  <article class="stat-card stat-coral">
+    <div class="stat-icon">🏆</div><span>Partidas no total</span>
+    <strong id="num-total">00</strong><small>cadastradas no sistema</small>
+  </article>
+  <article class="stat-card stat-sky">
+    <div class="stat-icon">✅</div><span>Encerradas</span>
+    <strong id="num-encerrados">00</strong><small>resultados finais</small>
+  </article>
+  <article class="stat-card stat-violet">
+    <div class="stat-icon">🗓️</div><span>Na sequência</span>
+    <strong id="num-proximos">00</strong><small>confrontos agendados</small>
+  </article>
+</section>
+
+<div class="container-placar">
+  <section class="coluna-confronto">
+    <div id="lista-jogos"></div>
+  </section>
+
+  <aside class="coluna-proximos">
+    <h3>Na sequência</h3>
+    <div id="lista-proximos"></div>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/placar.js') }}"></script>
+{% endblock %}

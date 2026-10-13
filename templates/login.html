@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Interclasse Arena</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="pagina-login">
+  <div class="container">
+    <div class="card card-login">
+      <img class="logo-interclasse marca-login" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Interclasse">
+      <h2>Entrar no Interclasse</h2>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="seuemail@escola.com">
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Sua senha">
+
+      <button class="btn-primaria" id="btn-entrar">Entrar</button>
+      <div class="erro" id="msg-erro"></div>
+
+      <p style="text-align:center; margin-top:16px;">
+        <a href="{{ url_for('pagina_placar') }}">Ver placar ao vivo sem login →</a>
+      </p>
+      <p style="text-align:center; margin-top:8px;">
+        <a href="{{ url_for('pagina_cadastro') }}">Ainda não tem conta? Cadastre-se com seu e-mail escolar →</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/tema.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

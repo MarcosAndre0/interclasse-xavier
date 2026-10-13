@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% set pagina = "chaveamento" %}
+{% block titulo %}Mata-mata{% endblock %}
+{% block eyebrow %}Mata-mata{% endblock %}
+{% block titulo_pagina %}O caminho até a taça.{% endblock %}
+{% block descricao %}Veja quem avança e como cada confronto aproxima uma turma da final.{% endblock %}
+{% block sincronia %}Atualiza a cada 5s{% endblock %}
+{% block conteudo %}
+    <label for="select-modalidade-chave">Modalidade</label>
+    <select id="select-modalidade-chave"></select>
+
+    <!-- Painel só do marcador: adicionar salas e montar o quadro -->
+    <div id="painel-salas" class="card painel-gerar-chaveamento" style="display:none;">
+      <div class="linha-botoes-chave">
+        <button type="button" class="btn-primaria" id="btn-abrir-salas" style="margin-top:0;">➕ Adicionar salas</button>
+        <button type="button" id="btn-resetar-chaveamento" class="btn-limpar-quadro">🗑️ Limpar quadro atual</button>
+      </div>
+
+      <div id="area-salas" style="display:none;">
+        <h3>Salas participantes</h3>
+        <p class="rodape-info" style="text-align:left; margin:0 0 8px;">Marque as salas que foram colocadas por engano para excluí-las.</p>
+        <div id="lista-salas" class="chips-turmas"></div>
+        <button type="button" class="btn-limpar-quadro" id="btn-excluir-salas" style="margin-top:10px;">🗑️ Excluir salas marcadas</button>
+
+        <label for="input-novas-salas">Adicionar salas que faltam (separe por vírgula)</label>
+        <input type="text" id="input-novas-salas" placeholder="Ex: 1º A, 2º FDI, 3º DS">
+        <button type="button" class="btn-primaria" id="btn-adicionar-salas" style="margin-top:12px;">Adicionar salas</button>
+        <p class="sorteio-msg" id="msg-salas"></p>
+
+        <h3 style="margin-top:22px;">Montar o quadro desta modalidade</h3>
+        <div id="controles-quadro"></div>
+        <p class="sorteio-msg" id="msg-chaveamento"></p>
+      </div>
+    </div>
+
+    <div id="chaveamento-conteudo">
+      <p class="rodape-info">Carregando...</p>
+    </div>
+    <p class="rodape-info">Atualiza automaticamente a cada 5 segundos.</p>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/chaveamento.js') }}"></script>
+{% endblock %}

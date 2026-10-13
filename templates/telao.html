@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telão - Interclasse Arena</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="telao-body">
+  <div class="telao-topo">
+    <!-- Clicar na logo sai do telão e volta para o placar -->
+    <a class="brand-lockup" href="{{ url_for('pagina_placar') }}" title="Sair do telão">
+      <img class="logo-interclasse" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Interclasse">
+      <div>
+        <div class="brand-name">Interclasse</div>
+        <div class="brand-subtitle">Arena</div>
+      </div>
+    </a>
+    <span class="telao-ao-vivo"><span class="live-dot"></span> ao vivo</span>
+  </div>
+
+  <div class="telao-container" id="telao-container">
+    <p class="telao-vazio">Carregando...</p>
+  </div>
+
+  <div class="telao-tira-proximos" id="telao-proximos"></div>
+
+  <div class="telao-rodape">
+    <img id="telao-qrcode" alt="QR code para o placar no celular">
+    <span>Aponte a câmera<br>para ver no celular</span>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/vitoria.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/telao.js') }}"></script>
+</body>
+</html>

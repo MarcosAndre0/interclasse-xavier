@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% set pagina = "classificacao" %}
+{% block titulo %}Classificação{% endblock %}
+{% block eyebrow %}Tabela geral{% endblock %}
+{% block titulo_pagina %}Quem está no topo?{% endblock %}
+{% block descricao %}Vitória vale 3 pontos, empate 1 e derrota 0. A soma considera todas as modalidades já encerradas.{% endblock %}
+{% block sincronia %}Atualiza a cada 10s{% endblock %}
+{% block conteudo %}
+
+
+    <div class="seletor-modalidade-classificacao">
+      <label for="select-modalidade-classificacao">Ver classificação de</label>
+      <select id="select-modalidade-classificacao">
+        <option value="">Geral (todas as modalidades)</option>
+      </select>
+    </div>
+
+    <div id="tabela-classificacao-container">
+      <p class="rodape-info">Carregando...</p>
+    </div>
+
+    <p class="rodape-info">Atualiza automaticamente a cada 10 segundos.</p>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/classificacao.js') }}"></script>
+{% endblock %}
